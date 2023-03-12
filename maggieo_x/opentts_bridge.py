@@ -39,6 +39,7 @@ def ssml_to_wav(ssml_text, default_voice, api_url, cache_dir):
                 'ssmlDates': True,
                 'ssmlCurrency': True,
             },
+            timeout=10,
         )
         with open(destination_path, 'wb') as fh:
             fh.write(resp.content)

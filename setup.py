@@ -19,7 +19,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "maggieoCtrl=maggieo_x.core:main",
+            "maggieoCtrl=maggieo_x.core:Maggie.console_app",
         ],
     },
 )
