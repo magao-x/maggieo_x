@@ -131,12 +131,14 @@ class Maggie(device.XDevice):
     def load_personality(self, personality_name):
         personality_file = os.path.join(HERE, "personalities", f"{personality_name}.xml")
         for cb, device_name, property_name in self._cb_handles:
-            self.client.unregister_callback(cb, device_name=device_name, property_name=property_name)
+            try:
+                self.client.unregister_callback(cb, device_name=device_name, property_name=property_name)
+            except ValueError:
+                log.exception(f"Tried tp remove {cb=} {device_name=} {property_name=}")
         self.log.info(f"Loading personality from {personality_file}")
         self.personality = Personality.from_path(personality_file)
         self.default_voice = self.personality.default_voice
         for reaction in self.personality.reactions:
-            cleaned_indi_id = reaction.indi_id.replace('.', '__')
             device_name, property_name, element_name = reaction.indi_id.split('.')
             self.client.get_properties(reaction.indi_id)
             for t in reaction.transitions:
