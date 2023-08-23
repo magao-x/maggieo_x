@@ -164,6 +164,7 @@ class Maggie(device.XDevice):
         while self.client.status is not constants.ConnectionStatus.CONNECTED:
             self.log.info("Waiting for connection...")
             time.sleep(1)
+        self.wake_INDI_server()
         self.log.info("Connected.")
         self.log.debug(f"Caching synthesis output to {self.cache_dir}")
         os.makedirs(self.cache_dir, exist_ok=True)
